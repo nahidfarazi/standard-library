@@ -4,7 +4,7 @@ bufio.ScanBytes হল bufio.Scanner-এর একটি split function, যা 
 
 bufio.Scanner সাধারণত লাইন, শব্দ বা বাইট অনুযায়ী ডাটা পার্স করতে ব্যবহৃত হয়, যেখানে ScanBytes প্রতিটি বাইটকে আলাদা টোকেন হিসেবে ধরে।
 
-####ScanBytes এর সিনট্যাক্স
+#### ScanBytes এর সিনট্যাক্স
 
 ```go
 func ScanBytes(data []byte, atEOF bool) (advance int, token []byte, err error)
@@ -27,7 +27,7 @@ ScanBytes ব্যবহার করা হয় যখন:
 
 ফাইল বা নেটওয়ার্ক স্ট্রিম থেকে ইনপুট রিড করা হয় এবং প্রতিটি বাইট আলাদাভাবে প্রসেস করতে হয়।
 ```
-### উদাহরণ: প্রতিটি বাইট আলাদা করে প্রিন্ট করা!
+#### উদাহরণ: প্রতিটি বাইট আলাদা করে প্রিন্ট করা!
 ```go
 package main
 
