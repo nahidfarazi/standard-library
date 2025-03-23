@@ -1,0 +1,5 @@
+package bufio
+
+func ScanByte() {
+
+}
