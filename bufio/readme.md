@@ -57,3 +57,88 @@ func main() {
 	}
 }
 ```
+উদাহরণ: ফাইল থেকে বাইট-বাই-বাইট পড়া!
+
+```go
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+func main() {
+	// ফাইল ওপেন করা
+	file, err := os.Open("test.txt")
+	if err != nil {
+		fmt.Println("Error opening file:", err)
+		return
+	}
+	defer file.Close()
+
+	// Scanner তৈরি
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanBytes)
+
+	// ফাইল থেকে প্রতিটি বাইট পড়া
+	for scanner.Scan() {
+		fmt.Printf("Byte: %q\n", scanner.Text())
+	}
+
+	// সম্ভাব্য এরর চেক করা
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Error:", err)
+	}
+}
+```
+#### ব্যাখ্যা
+```
+os.Open("test.txt") দিয়ে ফাইল ওপেন করা হয়েছে।
+
+scanner.Split(bufio.ScanBytes) দিয়ে Scanner-কে প্রতি বাইট পড়ার জন্য সেট করা হয়েছে।
+
+scanner.Text() দিয়ে প্রতিটি বাইট প্রিন্ট করা হচ্ছে।
+```
+#### উদাহরণ: সিরিয়াল ডিভাইস থেকে সেন্সর ডাটা রিড করা!
+```অনেক ক্ষেত্রে UART বা Serial Communication ব্যবহার করে সেন্সর বা IoT ডিভাইস থেকে ইনপুট নেওয়া হয়। সেখানে ScanBytes ব্যবহার করা যায়।
+```
+
+```go
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"log"
+	"os"
+)
+
+func main() {
+	// ধরে নিই, "/dev/ttyUSB0" হলো সিরিয়াল পোর্ট
+	file, err := os.Open("/dev/ttyUSB0")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanBytes)
+
+	for scanner.Scan() {
+		fmt.Printf("Received Byte: %q\n", scanner.Text())
+	}
+
+	if err := scanner.Err(); err != nil {
+		fmt.Println("Error:", err)
+	}
+}
+```
+#### ব্যাখ্যা
+```
+এখানে আমরা "/dev/ttyUSB0" (সিরিয়াল পোর্ট) থেকে ইনপুট পড়ছি।
+
+ScanBytes ব্যবহার করে প্রতিটি বাইট প্রসেস করা হচ্ছে।
+
+এটি সেন্সর ডাটা, আরডুইনো ইনপুট বা GPS ডাটা প্রসেস করার জন্য ব্যবহার করা যেতে পারে।
+```
