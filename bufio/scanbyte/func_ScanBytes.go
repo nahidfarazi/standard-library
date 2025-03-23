@@ -1,4 +1,4 @@
-package bufio
+package scanbyte
 
 func ScanByte() {
 
